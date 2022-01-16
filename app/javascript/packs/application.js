@@ -6,6 +6,11 @@
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+require("bootstrap/dist/js/bootstrap.min.js")
+
+// yarn を用いた Bootstrap の追加
+import "bootstrap";
+import "../stylesheets/bootstrap.scss";
 
 Rails.start()
 ActiveStorage.start()
