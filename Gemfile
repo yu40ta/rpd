@@ -54,3 +54,6 @@ gem 'seed-fu'
 
 # 他言語対応
 gem 'rails-i18n'
+
+# enum 日本語化
+gem 'enum_help'
