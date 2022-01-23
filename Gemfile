@@ -42,6 +42,12 @@ group :development do
   gem 'spring'
   gem 'html2slim'
   gem 'slim-rails'
+  gem 'solargraph'
+  gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'ruby-debug-ide'
+  gem 'debase'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
