@@ -1,0 +1,37 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: containers/rails/Dockerfile.dev
+    container_name: rpd_app
+    env_file: .env
+    # 開発環境のみ redebug-ide を利用したデバッグを有効化する
+    command:
+      - "bash"
+      - "-c"
+      - "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s -p 3000 -b 0.0.0.0"
+    volumes:
+      - .:/rpd # プロジェクトごとに修正
+    ports:
+      - "3000:3000" # Rails 用ポート
+      - "1234:1234" # Debug アタッチ用ポート
+      - "26162:26162" # Debug ディスパッチャ用ポート
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+  # PostgreSQL 用コンテナ
+  db:
+    build:
+      context: .
+      dockerfile: containers/postgresql/Dockerfile
+    container_name: rpd_db
+    env_file: .env
+    # 永続化ボリュームの定義
+    ports:
+      - '5433:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+volumes:
+  db-data: # 永続化データボリューム

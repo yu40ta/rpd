@@ -1,0 +1,104 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.194.3/containers/docker-existing-docker-compose
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+// 参考：
+//   https://zenn.dev/satococoa/articles/e4e013fd0c7e5c
+//   https://qiita.com/jjjkkkjjj/items/3b111e4768e740c5cd24
+{
+  "name": "Rails with docker compose",
+  // Update the 'dockerComposeFile' list if you have more compose files or use different names.
+  // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+  "dockerComposeFile": [
+    "../docker-compose.dev.yml"
+  ],
+  // The 'service' property is the name of the service for the container that VS Code should
+  // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+  "service": "app",
+  // The optional 'workspaceFolder' property is the path VS Code should open by default when
+  // connected. This is typically a file mount in .devcontainer/docker-compose.yml
+  "workspaceFolder": "/rpd",
+  // コンテナ接続時の設定を上書き
+  "settings": {
+    // デフォルトでbashのターミナルを起動させる
+    // https://qiita.com/tt4q/items/8a0e4c31f13279db0d65
+    "terminal.integrated.defaultProfile.linux": "sh",
+    // ↑のコマンドに指定出来るコマンドを列挙する
+    "terminal.integrated.profiles.linux": {
+      "bash": {
+        "path": "bash",
+        "icon": "terminal-bash"
+      },
+      "zsh": {
+        "path": "zsh"
+      },
+      "fish": {
+        "path": "fish"
+      },
+      "tmux": {
+        "path": "tmux",
+        "icon": "terminal-tmux"
+      },
+      "pwsh": {
+        "path": "pwsh",
+        "icon": "terminal-powershell"
+      }
+    },
+    // solargraph (Rubyのformatter) 用の設定
+    "solargraph.bundlerPath": "/usr/local/bundle/bin/",
+    // rubocop (Rubyのformatter) 用の設定
+    // https://qiita.com/jonakp/items/013b0d309a4e64e47d5b
+    "ruby.lint": {
+      "rubocop": true
+    },
+    "[ruby]": {
+      "editor.formatOnSave": true,
+      "editor.formatOnSaveTimeout": 5000
+    },
+    "ruby.format": "rubocop"
+  },
+  // コンテナ起動時に自動で有効化されるVSCodeの拡張機能
+  "extensions": [
+    // ---------
+    // Ruby共通
+    // ---------
+    // ruby公式拡張
+    "rebornix.ruby",
+    // インテリセンス（コード補完）
+    "visualstudioexptteam.vscodeintellicode",
+    // モジュールや関数等にジャンプできるようになる
+    "miguel-savignano.ruby-symbols",
+    // solargraph
+    "castwide.solargraph",
+    // ---------
+    // Rails関連
+    // ---------
+    // erb補完
+    "craigmaslowski.erb",
+    // railsスニペット
+    "vense.rails-snippets",
+    // ---------
+    // Git関連
+    // ---------
+    "donjayamanne.githistory",
+    "eamodio.gitlens",
+    // ---------
+    // その他便利拡張
+    // ---------
+    // スペルミスを指摘してくれる
+    "streetsidesoftware.code-spell-checker",
+    // 全角スペースを表示してくれる
+    "mosapride.zenkaku",
+    // インデントを分かりやすくしてくれる
+    "oderwat.indent-rainbow"
+  ],
+  // 起動するサービス (空にしておくとdocker-compose.ymlにあるサービスが全て起動する)
+  "runServices": [
+    "app"
+  ],
+  // コンテナ生成後に実行されるコマンド
+  // lessを入れないとbinding.pryで止めたときのページャーの挙動が使いにくい
+  // vimを入れないとpryでeditが使えない
+  // yard gemsを実行しておくとgemの中身までsolargraphが補完したりしてくれるようになる
+  // ちなみにyardはsolargraphの依存で入っている。
+  "postCreateCommand": "apt install -y less vim && bin/bundle exec yard gems"
+}
