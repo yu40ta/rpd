@@ -1,16 +1,24 @@
 FROM ruby:2.7.2
 
 ENV APP_ROOT=/rpd \
+    LANG=ja_JP.UTF-8 \
+    LC_CTYPE=ja_JP.UTF-8 \
     TZ=Asia/Tokyo
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update -qq && \
-    apt-get install -y nodejs postgresql-client yarn imagemagick libpq-dev libvips-tools locales
+RUN apt-get update -qq && \
+    apt-get install -y build-essential
 
-RUN echo "ja_JP.UTF-8 UTF-8" > /etc/locale.gen && \
+RUN apt-get install -y wget apt-transport-https && \
+    wget --quiet -O - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y yarn postgresql-client imagemagick libpq-dev libvips-tools locales
+
+RUN apt-get install -y task-japanese locales locales-all && \
     locale-gen ja_JP.UTF-8 && \
     /usr/sbin/update-locale LANG=ja_JP.UTF-8
+
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
 
 WORKDIR $APP_ROOT
 COPY ./Gemfile* ${APP_ROOT}
