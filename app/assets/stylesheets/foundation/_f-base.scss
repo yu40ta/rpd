@@ -1,0 +1,46 @@
+// -----
+// All
+// -----
+* {
+  box-sizing: border-box;
+  font-family: PixelMplus12, arial, sans-serif;
+}
+
+// -----
+// hidden
+// -----
+.hidden {
+  display: none;
+}
+
+// -----
+// blinking
+// -----
+.blinking {
+  -webkit-animation:blink 1.2s ease-in-out infinite alternate;
+  -moz-animation:blink 1.2s ease-in-out infinite alternate;
+  animation:blink 1.2s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes blink {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes blink {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@keyframes blink {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+// -----
+// link
+// -----
+a:hover {
+  opacity: 0.7;
+  text-decoration: none;
+}
