@@ -1,0 +1,15 @@
+.c-button {
+  &--login {
+    border: 3px dotted #fff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin: 0 auto;
+    padding: 24px 32px;
+    &:hover {
+      color: #aaa;
+      border: 3px dotted #aaa;
+    }
+  }
+}
