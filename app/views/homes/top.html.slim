@@ -1,0 +1,10 @@
+wrapper.top-wrapper
+  div.top
+    h1.top__headline.hidden RPD
+    p.top__concept 毎日の習慣が、キミを強くする。
+    = link_to todos_path, class: "top__title"
+      = image_tag "rpd.png", class: "top__title--main"
+      = image_tag "rpd_subtitle-white.png", class: "top__title--sub"
+    section.top__login
+      h2.top__login__title.hidden LOGIN
+      = link_to "CLICK TO START", todos_path, class: "top__login__btn c-button--login blinking"
